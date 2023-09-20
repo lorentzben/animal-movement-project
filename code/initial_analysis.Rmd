@@ -1,0 +1,53 @@
+---
+title: "Initial Analysis"
+author: "Ben Lorentz"
+date: "2023-09-30"
+output:
+  word_document: default
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+1. Descriptive statistics
+
+a. Read in Data
+
+```{r load data}
+
+```
+
+b. how many individuals examined
+
+```{r how many individuals in dataset}
+
+```
+
+c. How many datapoints are present for one individual in the timeperiod
+
+```{r how many datapoints are present over what time}
+
+```
+
+d. Simple plot of the data points for one individual 
+
+```{r plot the data}
+
+```
+
+2. Estimate home range for one individual using three methods of your own choice.
+
+0. Choose Individual
+
+a. Home Range Method 1
+
+b. Home Range Method 2
+
+c. Home Range Method 3 
+
+3. Explore the movement of all animals in the data set extracting a continuous covariate
+(for example elevation or distance to roads) to the data. Extract the covariate both at the end points and along the steps. Explore the differences between the two ways of extracting the data, for example fitting a linear regression with step length as response variable and the extracted variable as explanatory variable.
+
+
+4. Fit a habitat selection function of your own choice (resource selection function at one scale or an (integrated) step-selection function) to the data using one covariate.
+
