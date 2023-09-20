@@ -14,24 +14,96 @@ output:
 a. Read in Data
 
 ```{r load data}
+library(tidyverse)
+library(amt)
+library(sf)
+library(lubridate) # to deal with date and time
+library(ggplot2)
 
+vulture_metadata <- read.csv("../data/Black-Vultures-and-Turkey-Vultures-Southeastern-USA-reference-data.csv")
+print(vulture_metadata)
+
+vulture_dat <- read.csv("../data/Black-Vultures-and-Turkey-Vultures-Southeastern-USA.csv")
+head(vulture_dat)
+str(vulture_dat)
+nrow(vulture_dat)
+#vulture_dat
 ```
 
 b. how many individuals examined
 
-```{r how many individuals in dataset}
+```{r how many individuals in dataset} 
+# tag id's 17 tags 
 
+sort(unique(vulture_dat$tag.local.identifier))
+length(unique(vulture_dat$tag.local.identifier))
+
+# individual bird id's 18 birds
+
+sort(unique(vulture_dat$individual.local.identifier))
+length(unique(vulture_dat$individual.local.identifier))
 ```
 
-c. How many datapoints are present for one individual in the timeperiod
+c. How many datapoints are present for each individual in the timeperiod
 
 ```{r how many datapoints are present over what time}
 
+bird_ids <- unique(vulture_dat$individual.local.identifier)
+
+record_table <- data.frame()
+
+for(i in 1:length(bird_ids)){
+  current_bird <- bird_ids[i]
+  number_of_records <- sum(vulture_dat$individual.local.identifier == current_bird)
+  new_row <- c(current_bird,number_of_records)
+  #colnames(new_row) <- c("bird id","number of records")
+  record_table <- rbind(record_table, new_row)
+}
+
+colnames(record_table) <-  c("bird id","number of records")
+
+(record_table)
+```
+d. When does each record start and stop?
+
+```{r find start and stop points for each record}
+
+bird_ids <- unique(vulture_dat$individual.local.identifier)
+
+start_stop_table <- data.frame()
+
+for(i in 1:length(bird_ids)){
+  current_bird <- bird_ids[i]
+  curr_records <- vulture_dat[vulture_dat$individual.local.identifier == current_bird,]
+  start_rec <- head(curr_records, n=1)$timestamp
+  stop_rec <- tail(curr_records, n=1)$timestamp
+  n_days <- round(as.numeric(difftime(ymd_hms(stop_rec), ymd_hms(start_rec),units = "days")),3)
+  new_row <- c(current_bird,start_rec, stop_rec, n_days)
+  
+  start_stop_table <- rbind(start_stop_table, new_row)
+}
+
+colnames(start_stop_table) <-  c("bird id","start","stop","n days")
+
+(start_stop_table)
+
 ```
 
-d. Simple plot of the data points for one individual 
+
+e. Simple plot of the data points for one individual 
 
 ```{r plot the data}
+#select bird 91
+
+id <- 91
+
+#subset whole dataset
+
+vulture_91 <- vulture_dat[vulture_dat$individual.local.identifier == 91,]
+
+plot(vulture_91$location.long, vulture_91$location.lat)
+
+ggplot(vulture_91, aes(x=location.long, y=location.lat))+ geom_point()
 
 ```
 
