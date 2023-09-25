@@ -14,11 +14,15 @@ output:
 a. Read in Data
 
 ```{r load data}
+source(".installpackages.R")
+
 library(tidyverse)
 library(amt)
 library(sf)
-library(lubridate) # to deal with date and time
+library(lubridate) 
 library(ggplot2)
+library(terra)
+library(png)
 
 vulture_metadata <- read.csv("../data/Black-Vultures-and-Turkey-Vultures-Southeastern-USA-reference-data.csv")
 print(vulture_metadata)
@@ -92,7 +96,7 @@ colnames(start_stop_table) <-  c("bird id","start","stop","n days")
 
 e. Simple plot of the data points for one individual 
 
-```{r plot the data}
+```{r plot the data for 91}
 #select bird 91
 
 id <- 91
@@ -109,16 +113,386 @@ ggplot(vulture_91, aes(x=location.long, y=location.lat))+ geom_point()
 
 2. Estimate home range for one individual using three methods of your own choice.
 
-0. Choose Individual
+0. Choose Individual and generate Tracks
 
-a. Home Range Method 1
+```{r select bird id 91}
 
-b. Home Range Method 2
+vulture_91 <- vulture_dat %>%
+  filter(individual.local.identifier == 91)
 
-c. Home Range Method 3 
+head(vulture_91)
+
+# check timestamp
+class(vulture_91$timestamp)
+
+# convert timestamp to posixct format
+vulture_91$timestamp <- ymd_hms(vulture_91$timestamp, tz = "UTC")
+head(vulture_91$timestamp)
+str(vulture_91$timestamp)
+
+# make track for vulture 91
+trk_91 <- make_track(vulture_91, location.long,location.lat, timestamp, id = individual.local.identifier, crs = 4326)
+
+# save this file to disk
+saveRDS(trk_91, file = "../output/vulture_91_gps_data_track.rds")
+
+# check sampling rate for bird 91
+summarize_sampling_rate(trk_91)
+
+# This suggests that the median sampling rate is 2h, but varying up to
+# 12h. We can now resample the whole track to 2h interval (with tolerance of
+# 10 min), so that if there are more than 2h between relocations, they will 
+# be divided into different bursts.
+
+trk_91_resamp <- track_resample(trk_91, rate = minutes(1), tolerance = minutes(1490))
+
+# add step length as a new col
+trk_91_sl <- trk_91_resamp %>% mutate(sl = step_lengths(.)) 
+
+# calculate steps by burst
+trk_91_sbb <- trk_91_resamp %>% steps_by_burst()
+```
+
+a. MCP Home Range
+
+```{r mcp home range estimation for 91}
+mcps <- hr_mcp(trk_91, levels = c(0.5, 0.75, 0.95, 1))
+mcps
+
+# Get area in km^2
+hr_area(mcps, units = TRUE) %>% 
+  mutate(area = units::set_units(area, "km^2"))
+
+# plot the polygon isopleths by themeself
+plot(hr_isopleths(mcps)[1])
+
+# Plot the isopleth with data on top
+plot(mcps) 
+
+# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)
+
+hr_isopleths(mcps) %>% 
+  # Make level a factor for discrete color scales
+  # Can control order and labels here
+  mutate(level = factor(level, 
+                        levels = c("1", "0.95", "0.75", "0.5"),
+                        labels = c("100%", "95%", "75%", "50%"))) %>% 
+  ggplot() +
+  geom_sf(aes(color = level), 
+          fill = NA, linewidth = 2) +
+  geom_point(data = mcps$data, aes(x = x_, y = y_),
+             color = "gray30", alpha = 0.5) +
+  xlab(NULL) +
+  ylab(NULL) +
+  scale_color_brewer(name = "MCP Level",
+                     palette = "Set1") +
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.box.background = element_rect(colour = "black", linewidth = 0.8))
+```
+
+
+b. Kernel density estimation of Home Range
+
+```{r KDE home range estimation for 91}
+
+kdes <- hr_kde(trk_91, levels = c(0.5, 0.95),)
+
+# Get area in km^2
+hr_area(kdes, units = TRUE) %>% 
+  mutate(area = units::set_units(area, "km^2"))
+
+# plot the polygon isopleths by themeself
+plot(hr_isopleths(kdes)[1])
+
+# Plot the isopleth with data on top
+plot(kdes) 
+
+# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)
+
+hr_isopleths(kdes) %>% 
+  # Make level a factor for discrete color scales
+  # Can control order and labels here
+  mutate(level = factor(level, 
+                        levels = c("1", "0.95", "0.75", "0.5"),
+                        labels = c("100%", "95%", "75%", "50%"))) %>% 
+  ggplot() +
+  geom_sf(aes(color = level), 
+          fill = NA, linewidth = 2) +
+  geom_point(data = mcps$data, aes(x = x_, y = y_),
+             color = "gray30", alpha = 0.5) +
+  xlab(NULL) +
+  ylab(NULL) +
+  scale_color_brewer(name = "MCP Level",
+                     palette = "Set1") +
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.box.background = element_rect(colour = "black", linewidth = 0.8))
+
+hr_overlap(mcps,kdes)
+```
+
+c. Autocorrelated Kernel Density estimator of home range
+
+```{r}
+
+# Without going into detail on the different CTMMs, we'll demonstrate fitting
+# an aKDE with an Ornstein-Uhlenbeck model.
+akdes <- hr_akde(trk_91, model = fit_ctmm(trk_91, "iid"), levels = 0.95)
+
+# Get area in km^2
+hr_area(akdes, units = TRUE) %>% 
+  mutate(area = units::set_units(area, "km^2"))
+
+# plot the polygon isopleths by themeself
+plot(hr_isopleths(akdes)[1])
+
+# Plot the isopleth with data on top
+plot(akdes) 
+
+# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)
+
+hr_isopleths(akdes) %>% 
+  # Make level a factor for discrete color scales
+  # Can control order and labels here
+  mutate(level = factor(level, 
+                        levels = c("1", "0.95", "0.75", "0.5"),
+                        labels = c("100%", "95%", "75%", "50%"))) %>% 
+  ggplot() +
+  geom_sf(aes(color = level), 
+          fill = NA, linewidth = 2) +
+  geom_point(data = mcps$data, aes(x = x_, y = y_),
+             color = "gray30", alpha = 0.5) +
+  xlab(NULL) +
+  ylab(NULL) +
+  scale_color_brewer(name = "MCP Level",
+                     palette = "Set1") +
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.box.background = element_rect(colour = "black", linewidth = 0.8))
+
+hr_overlap(kdes,akdes)
+
+```
+
+### Examine Bird 108
+
+
+e. Simple plot of the data points for one individual 
+
+```{r plot the data}
+#select bird 108
+
+id <- 108
+
+#subset whole dataset
+
+vulture_108 <- vulture_dat[vulture_dat$individual.local.identifier == 108,]
+
+plot(vulture_108$location.long, vulture_108$location.lat)
+
+ggplot(vulture_108, aes(x=location.long, y=location.lat))+ geom_point()
+
+```
+
+
+2. Estimate home range for one individual using three methods of your own choice.
+
+0. Choose Individual and generate Tracks
+
+```{r select bird id 108}
+
+vulture_108 <- vulture_dat %>%
+  filter(individual.local.identifier == 108)
+
+head(vulture_108)
+
+# check timestamp
+class(vulture_108$timestamp)
+
+# convert timestamp to posixct format
+vulture_108$timestamp <- ymd_hms(vulture_108$timestamp, tz = "UTC")
+head(vulture_108$timestamp)
+str(vulture_108$timestamp)
+
+# make track for vulture 91
+trk_108 <- make_track(vulture_108, location.long,location.lat, timestamp, id = individual.local.identifier, crs = 4326)
+
+# save this file to disk
+saveRDS(trk_108, file = "../output/vulture_108_gps_data_track.rds")
+
+# check sampling rate for bird 108
+summarize_sampling_rate(trk_108)
+
+# This suggests that the median sampling rate is 2h, but varying up to
+# 12h. We can now resample the whole track to 2h interval (with tolerance of
+# 10 min), so that if there are more than 2h between relocations, they will 
+# be divided into different bursts.
+
+trk_108_resamp <- track_resample(trk_108, rate = minutes(2), tolerance = minutes(300))
+
+# add step length as a new col
+trk_108_sl <- trk_108_resamp %>% mutate(sl = step_lengths(.)) 
+
+# calculate steps by burst
+trk_108_sbb <- trk_108_resamp %>% steps_by_burst()
+```
+
+a. MCP Home Range
+
+```{r mcp home range estimation}
+mcps <- hr_mcp(trk_108, levels = c(0.5, 0.75, 0.95, 1))
+mcps
+
+# Get area in km^2
+hr_area(mcps, units = TRUE) %>% 
+  mutate(area = units::set_units(area, "km^2"))
+
+# plot the polygon isopleths by themeself
+plot(hr_isopleths(mcps)[1])
+
+# Plot the isopleth with data on top
+plot(mcps) 
+
+# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)
+
+hr_isopleths(mcps) %>% 
+  # Make level a factor for discrete color scales
+  # Can control order and labels here
+  mutate(level = factor(level, 
+                        levels = c("1", "0.95", "0.75", "0.5"),
+                        labels = c("100%", "95%", "75%", "50%"))) %>% 
+  ggplot() +
+  geom_sf(aes(color = level), 
+          fill = NA, linewidth = 2) +
+  geom_point(data = mcps$data, aes(x = x_, y = y_),
+             color = "gray30", alpha = 0.5) +
+  xlab(NULL) +
+  ylab(NULL) +
+  scale_color_brewer(name = "MCP Level",
+                     palette = "Set1") +
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.box.background = element_rect(colour = "black", linewidth = 0.8))
+```
+
+b. Kernel density estimation of Home Range
+
+```{r KDE home range estimation}
+
+kdes <- hr_kde(trk_108, levels = c(0.5, 0.95),)
+
+# Get area in km^2
+hr_area(kdes, units = TRUE) %>% 
+  mutate(area = units::set_units(area, "km^2"))
+
+# plot the polygon isopleths by themeself
+plot(hr_isopleths(kdes)[1])
+
+# Plot the isopleth with data on top
+plot(kdes) 
+
+# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)
+
+hr_isopleths(kdes) %>% 
+  # Make level a factor for discrete color scales
+  # Can control order and labels here
+  mutate(level = factor(level, 
+                        levels = c("1", "0.95", "0.75", "0.5"),
+                        labels = c("100%", "95%", "75%", "50%"))) %>% 
+  ggplot() +
+  geom_sf(aes(color = level), 
+          fill = NA, linewidth = 2) +
+  geom_point(data = mcps$data, aes(x = x_, y = y_),
+             color = "gray30", alpha = 0.5) +
+  xlab(NULL) +
+  ylab(NULL) +
+  scale_color_brewer(name = "MCP Level",
+                     palette = "Set1") +
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.box.background = element_rect(colour = "black", linewidth = 0.8))
+
+hr_overlap(mcps,kdes)
+```
+
+
+c. Autocorrelated Kernel Density estimator of home range
+
+```{r}
+
+# Without going into detail on the different CTMMs, we'll demonstrate fitting
+# an aKDE with an Ornstein-Uhlenbeck model.
+akdes <- hr_akde(trk_108, model = fit_ctmm(trk_108, "ou"), levels = 0.95)
+
+# Get area in km^2
+hr_area(akdes, units = TRUE) %>% 
+  mutate(area = units::set_units(area, "km^2"))
+
+# plot the polygon isopleths by themeself
+plot(hr_isopleths(akdes)[1])
+
+# Plot the isopleth with data on top
+plot(akdes) 
+
+# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)
+
+hr_isopleths(akdes) %>% 
+  # Make level a factor for discrete color scales
+  # Can control order and labels here
+  mutate(level = factor(level, 
+                        levels = c("1", "0.95", "0.75", "0.5"),
+                        labels = c("100%", "95%", "75%", "50%"))) %>% 
+  ggplot() +
+  geom_sf(aes(color = level), 
+          fill = NA, linewidth = 2) +
+  geom_point(data = mcps$data, aes(x = x_, y = y_),
+             color = "gray30", alpha = 0.5) +
+  xlab(NULL) +
+  ylab(NULL) +
+  scale_color_brewer(name = "MCP Level",
+                     palette = "Set1") +
+  theme_bw() +
+  theme(legend.position = "bottom", 
+        legend.box.background = element_rect(colour = "black", linewidth = 0.8))
+
+hr_overlap(kdes, akdes)
+
+```
+
 
 3. Explore the movement of all animals in the data set extracting a continuous covariate
 (for example elevation or distance to roads) to the data. Extract the covariate both at the end points and along the steps. Explore the differences between the two ways of extracting the data, for example fitting a linear regression with step length as response variable and the extracted variable as explanatory variable.
+
+```{r}
+library(terra)
+
+airport <- terra::rast("../data/US_VFR_Wall_Planning_Chart.tif")
+airport
+
+names(airport) <- "airport"
+airport
+
+plot(airport, main = "airport")
+
+airport_colors <- coltab(airport)[[1]]
+
+# blues
+airport_colors[airport_colors$red == 20,]
+
+# yellows
+airport_colors[airport_colors$red >= 249,]
+
+# reds
+airport_colors[airport_colors$red == 136,]
+
+airport_colors$isAirport <- ifelse(airport_colors$value %in% c(1,8,10,28,68), TRUE, FALSE)
+airport_class <- cbind(airport_colors$value, airport_colors$isAirport)
+colnames(airport_class) <- c("code","isAirport")
+airport_class <- as.tibble(airport_class)
+
+
+```
 
 
 4. Fit a habitat selection function of your own choice (resource selection function at one scale or an (integrated) step-selection function) to the data using one covariate.
