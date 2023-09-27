@@ -37,6 +37,46 @@
 \makeatother
 \usepackage{xcolor}
 \usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -75,11 +115,1515 @@
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   Descriptive statistics
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Read in Data
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{source}\NormalTok{(}\StringTok{".installpackages.R"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Package:  plyr was already installed.
+## Package:  dplyr was already installed.
+## Package:  ggplot2 was already installed.
+## Package:  gganimate was already installed.
+## Package:  tidyverse was already installed.
+## Package:  lubridate was already installed.
+## Package:  knitr was already installed.
+## Package:  png was already installed.
+## Package:  grid was already installed.
+## Package:  amt was already installed.
+\end{verbatim}
+
+\begin{verbatim}
+## The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
+## which was just loaded, will retire in October 2023.
+## Please refer to R-spatial evolution reports for details, especially
+## https://r-spatial.org/r/2023/05/15/evolution4.html.
+## It may be desirable to make the sf package available;
+## package maintainers should consider adding sf to Suggests:.
+## The sp package is now running under evolution status 2
+##      (status 2 uses the sf package in place of rgdal)
+\end{verbatim}
+
+\begin{verbatim}
+## Package:  ctmm was already installed.
+\end{verbatim}
+
+\begin{verbatim}
+## Registered S3 methods overwritten by 'adehabitatMA':
+##   method                       from
+##   print.SpatialPixelsDataFrame sp  
+##   print.SpatialPixels          sp
+\end{verbatim}
+
+\begin{verbatim}
+## Package:  adehabitatLT was already installed.
+## Package:  circular was already installed.
+## Package:  move2 was already installed.
+## Package:  KernSmooth was already installed.
+## Package:  sf was already installed.
+## Package:  raster was already installed.
+## Package:  terra was already installed.
+## Package:  sp was already installed.
+\end{verbatim}
+
+\begin{verbatim}
+## Please note that rgdal will be retired during October 2023,
+## plan transition to sf/stars/terra functions using GDAL and PROJ
+## at your earliest convenience.
+## See https://r-spatial.org/r/2023/05/15/evolution4.html and https://github.com/r-spatial/evolution
+## rgdal: version: 1.6-7, (SVN revision 1203)
+## Geospatial Data Abstraction Library extensions to R successfully loaded
+## Loaded GDAL runtime: GDAL 3.4.2, released 2022/03/08
+## Path to GDAL shared files: /Users/benlorentz/Library/R/x86_64/4.2/library/rgdal/gdal
+## GDAL binary built with GEOS: FALSE 
+## Loaded PROJ runtime: Rel. 8.2.1, January 1st, 2022, [PJ_VERSION: 821]
+## Path to PROJ shared files: /Users/benlorentz/Library/R/x86_64/4.2/library/rgdal/proj
+## PROJ CDN enabled: FALSE
+## Linking to sp version:1.6-1
+## To mute warnings of possible GDAL/OSR exportToProj4() degradation,
+## use options("rgdal_show_exportToProj4_warnings"="none") before loading sp or rgdal.
+\end{verbatim}
+
+\begin{verbatim}
+## Package:  rgdal was already installed.
+## Package:  pracma was already installed.
+## Package:  adehabitatHR was already installed.
+## Package:  igraph was already installed.
+## Package:  ergm was already installed.
+## Package:  network was already installed.
+## Package:  vroom was already installed.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.3     v readr     2.1.4
+## v forcats   1.0.0     v stringr   1.5.0
+## v ggplot2   3.4.3     v tibble    3.2.1
+## v lubridate 1.9.2     v tidyr     1.3.0
+## v purrr     1.0.2
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(amt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'amt'
+## 
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linking to GEOS 3.10.2, GDAL 3.4.2, PROJ 8.2.1; sf_use_s2() is TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lubridate) }
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(terra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## terra 1.7.46
+## 
+## Attaching package: 'terra'
+## 
+## The following object is masked from 'package:tidyr':
+## 
+##     extract
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(png)}
+
+
+\NormalTok{vulture\_metadata }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"../data/Black{-}Vultures{-}and{-}Turkey{-}Vultures{-}Southeastern{-}USA{-}reference{-}data.csv"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(vulture\_metadata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    tag.id animal.id     animal.taxon          deploy.on.date
+## 1     171         6   Cathartes aura 2013-06-17 13:19:20.000
+## 2     167         8 Coragyps atratus 2013-06-18 23:23:34.000
+## 3     162        12 Coragyps atratus 2013-06-20 16:40:40.000
+## 4     165        22 Coragyps atratus 2013-06-20 17:36:23.000
+## 5     163         1   Cathartes aura 2013-06-26 14:07:33.000
+## 6     173         3   Cathartes aura 2013-06-26 14:38:58.000
+## 7     180        13   Cathartes aura 2013-06-27 18:39:55.000
+## 8     161        47 Coragyps atratus 2013-07-03 16:06:48.000
+## 9     177        48 Coragyps atratus 2013-07-03 18:51:03.000
+## 10    172        60   Cathartes aura 2013-07-05 12:52:58.000
+## 11    178        57 Coragyps atratus 2013-07-05 16:39:00.000
+## 12    176        75   Cathartes aura 2013-07-09 15:31:45.000
+## 13    166        90   Cathartes aura 2013-07-30 14:34:17.000
+## 14    179        91   Cathartes aura 2013-07-31 15:52:51.000
+## 15    175        92 Coragyps atratus 2013-08-02 12:47:47.000
+## 16    168       108 Coragyps atratus 2014-04-21 18:40:25.000
+## 17    178       123   Cathartes aura 2014-04-23 19:44:16.000
+## 18    174       126 Coragyps atratus 2014-05-01 13:38:20.000
+##            deploy.off.date animal.life.stage animal.sex attachment.type
+## 1  2015-09-01 04:37:25.000             adult          m         harness
+## 2  2014-06-18 22:02:41.000             adult          m         harness
+## 3  2015-09-01 09:52:41.000             adult          m         harness
+## 4  2015-09-01 03:07:07.000             adult          f         harness
+## 5  2015-09-01 04:28:52.000             adult          f         harness
+## 6  2015-09-01 04:52:35.000             adult          f         harness
+## 7  2013-12-21 15:16:23.000             adult          f         harness
+## 8  2015-09-01 04:31:54.000             adult          f         harness
+## 9  2014-09-22 16:35:20.000             adult          m         harness
+## 10 2015-09-01 04:58:46.000             adult          m         harness
+## 11 2014-03-21 19:44:56.000             adult          f         harness
+## 12 2015-09-01 04:46:12.000             adult          m         harness
+## 13 2015-09-01 02:56:53.000             adult          m         harness
+## 14 2015-09-01 04:55:41.000             adult          m         harness
+## 15 2015-09-01 04:21:36.000             adult          f         harness
+## 16 2015-09-01 04:20:15.000             adult          m         harness
+## 17 2015-09-01 04:48:56.000             adult          m         harness
+## 18 2015-09-01 04:54:57.000             adult          m         harness
+##                                           deployment.end.comments
+## 1                                          Active at end of study
+## 2                         Transmission ceased; bird fate unknown.
+## 3                                          Active at end of study
+## 4                                                Vulture deceased
+## 5                                          Active at end of study
+## 6                                          Active at end of study
+## 7                          Transmission ceased; bird fate unknown
+## 8                                          Active at end of study
+## 9  Transmitter dropped; bird fate unknown; transmitter redeployed
+## 10                                         Active at end of study
+## 11                              Deceased; transmitter redeployed.
+## 12                                         Active at end of study
+## 13                                         Active at end of study
+## 14                                         Active at end of study
+## 15                                         Active at end of study
+## 16                                         Active at end of study
+## 17                                         Active at end of study
+## 18                                         Active at end of study
+##    deployment.end.type deployment.id manipulation.type tag.manufacturer.name
+## 1                other         171-6              none             Microwave
+## 2              unknown         167-8              none             Microwave
+## 3                other        162-12              none             Microwave
+## 4                 dead        165-22              none             Microwave
+## 5                other         163-1              none             Microwave
+## 6                other         173-3              none             Microwave
+## 7              unknown        180-13              none             Microwave
+## 8                other        161-47              none             Microwave
+## 9             fall-off        177-48              none             Microwave
+## 10               other        172-60              none             Microwave
+## 11                dead        178-57              none             Microwave
+## 12               other        176-75              none             Microwave
+## 13               other        166-90              none             Microwave
+## 14               other        179-91              none             Microwave
+## 15               other        175-92              none             Microwave
+## 16               other       168-108              none             Microwave
+## 17               other       178-123              none             Microwave
+## 18               other       174-126              none             Microwave
+##    tag.mass tag.readout.method
+## 1        70      phone-network
+## 2        70      phone-network
+## 3        70      phone-network
+## 4        70      phone-network
+## 5        70      phone-network
+## 6        70      phone-network
+## 7        70      phone-network
+## 8        70      phone-network
+## 9        70      phone-network
+## 10       70      phone-network
+## 11       70      phone-network
+## 12       70      phone-network
+## 13       70      phone-network
+## 14       70      phone-network
+## 15       70      phone-network
+## 16       70      phone-network
+## 17       70      phone-network
+## 18       70      phone-network
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vulture\_dat }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"../data/Black{-}Vultures{-}and{-}Turkey{-}Vultures{-}Southeastern{-}USA.csv"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(vulture\_dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     event.id visible               timestamp location.long location.lat
+## 1 3378871917    true 2013-06-18 23:26:49.000     -81.64039     33.15934
+## 2 3378871918    true 2013-06-18 23:50:02.000     -81.64057     33.15920
+## 3 3378871919    true 2013-06-19 00:14:17.000     -81.63882     33.15654
+## 4 3378871920    true 2013-06-19 00:38:31.000     -81.63679     33.15425
+## 5 3378871921    true 2013-06-19 01:02:46.000     -81.63669     33.15413
+## 6 3378871922    true 2013-06-19 01:29:01.000     -81.63675     33.15424
+##   gps.hdop gps.satellite.count gps.vdop ground.speed heading
+## 1      3.0                   5      2.2            0       0
+## 2      0.9                   9      1.4            0       0
+## 3      0.9                   9      1.3            0     317
+## 4      1.0                   8      1.3            0       0
+## 5      1.4                   6      1.8            0       0
+## 6      1.2                   6      1.6            0       0
+##   height.above.ellipsoid manually.marked.outlier sensor.type
+## 1                     80                      NA         gps
+## 2                     79                      NA         gps
+## 3                     73                      NA         gps
+## 4                     72                      NA         gps
+## 5                     76                      NA         gps
+## 6                     48                      NA         gps
+##   individual.taxon.canonical.name tag.local.identifier
+## 1                Coragyps atratus                  167
+## 2                Coragyps atratus                  167
+## 3                Coragyps atratus                  167
+## 4                Coragyps atratus                  167
+## 5                Coragyps atratus                  167
+## 6                Coragyps atratus                  167
+##   individual.local.identifier
+## 1                           8
+## 2                           8
+## 3                           8
+## 4                           8
+## 5                           8
+## 6                           8
+##                                            study.name
+## 1 Black Vultures and Turkey Vultures Southeastern USA
+## 2 Black Vultures and Turkey Vultures Southeastern USA
+## 3 Black Vultures and Turkey Vultures Southeastern USA
+## 4 Black Vultures and Turkey Vultures Southeastern USA
+## 5 Black Vultures and Turkey Vultures Southeastern USA
+## 6 Black Vultures and Turkey Vultures Southeastern USA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(vulture\_dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    2605997 obs. of  17 variables:
+##  $ event.id                       : num  3.38e+09 3.38e+09 3.38e+09 3.38e+09 3.38e+09 ...
+##  $ visible                        : chr  "true" "true" "true" "true" ...
+##  $ timestamp                      : chr  "2013-06-18 23:26:49.000" "2013-06-18 23:50:02.000" "2013-06-19 00:14:17.000" "2013-06-19 00:38:31.000" ...
+##  $ location.long                  : num  -81.6 -81.6 -81.6 -81.6 -81.6 ...
+##  $ location.lat                   : num  33.2 33.2 33.2 33.2 33.2 ...
+##  $ gps.hdop                       : num  3 0.9 0.9 1 1.4 1.2 1.2 1.5 1.5 2.2 ...
+##  $ gps.satellite.count            : int  5 9 9 8 6 6 7 7 7 5 ...
+##  $ gps.vdop                       : num  2.2 1.4 1.3 1.3 1.8 1.6 1.7 2.3 1.7 2.2 ...
+##  $ ground.speed                   : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ heading                        : num  0 0 317 0 0 0 0 158 0 0 ...
+##  $ height.above.ellipsoid         : num  80 79 73 72 76 48 83 59 66 72 ...
+##  $ manually.marked.outlier        : logi  NA NA NA NA NA NA ...
+##  $ sensor.type                    : chr  "gps" "gps" "gps" "gps" ...
+##  $ individual.taxon.canonical.name: chr  "Coragyps atratus" "Coragyps atratus" "Coragyps atratus" "Coragyps atratus" ...
+##  $ tag.local.identifier           : int  167 167 167 167 167 167 167 167 167 167 ...
+##  $ individual.local.identifier    : int  8 8 8 8 8 8 8 8 8 8 ...
+##  $ study.name                     : chr  "Black Vultures and Turkey Vultures Southeastern USA" "Black Vultures and Turkey Vultures Southeastern USA" "Black Vultures and Turkey Vultures Southeastern USA" "Black Vultures and Turkey Vultures Southeastern USA" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(vulture\_dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2605997
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#vulture\_dat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  how many individuals examined
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# tag id\textquotesingle{}s 17 tags }
+
+\FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(vulture\_dat}\SpecialCharTok{$}\NormalTok{tag.local.identifier))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 161 162 163 165 166 167 168 171 172 173 174 175 176 177 178 179 180
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(vulture\_dat}\SpecialCharTok{$}\NormalTok{tag.local.identifier))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# individual bird id\textquotesingle{}s 18 birds}
+
+\FunctionTok{sort}\NormalTok{(}\FunctionTok{unique}\NormalTok{(vulture\_dat}\SpecialCharTok{$}\NormalTok{individual.local.identifier))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   1   3   6   8  12  13  22  47  48  57  60  75  90  91  92 108 123 126
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(vulture\_dat}\SpecialCharTok{$}\NormalTok{individual.local.identifier))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 18
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  How many datapoints are present for each individual in the timeperiod
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bird\_ids }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(vulture\_dat}\SpecialCharTok{$}\NormalTok{individual.local.identifier)}
+
+\NormalTok{record\_table }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(bird\_ids))\{}
+\NormalTok{  current\_bird }\OtherTok{\textless{}{-}}\NormalTok{ bird\_ids[i]}
+\NormalTok{  number\_of\_records }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(vulture\_dat}\SpecialCharTok{$}\NormalTok{individual.local.identifier }\SpecialCharTok{==}\NormalTok{ current\_bird)}
+\NormalTok{  new\_row }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(current\_bird,number\_of\_records)}
+  \CommentTok{\#colnames(new\_row) \textless{}{-} c("bird id","number of records")}
+\NormalTok{  record\_table }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(record\_table, new\_row)}
+\NormalTok{\}}
+
+\FunctionTok{colnames}\NormalTok{(record\_table) }\OtherTok{\textless{}{-}}  \FunctionTok{c}\NormalTok{(}\StringTok{"bird id"}\NormalTok{,}\StringTok{"number of records"}\NormalTok{)}
+
+\NormalTok{(record\_table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    bird id number of records
+## 1        8             97255
+## 2       12            168457
+## 3       22            112667
+## 4       47            113321
+## 5       48             89945
+## 6       57             29717
+## 7      123            135554
+## 8       92            172766
+## 9      108             87646
+## 10     126            123437
+## 11       1            237897
+## 12       3            243371
+## 13       6            198840
+## 14      13             38560
+## 15      60            210787
+## 16      75            188019
+## 17      90            170442
+## 18      91            187316
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  When does each record start and stop?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bird\_ids }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(vulture\_dat}\SpecialCharTok{$}\NormalTok{individual.local.identifier)}
+
+\NormalTok{start\_stop\_table }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(bird\_ids))\{}
+\NormalTok{  current\_bird }\OtherTok{\textless{}{-}}\NormalTok{ bird\_ids[i]}
+\NormalTok{  curr\_records }\OtherTok{\textless{}{-}}\NormalTok{ vulture\_dat[vulture\_dat}\SpecialCharTok{$}\NormalTok{individual.local.identifier }\SpecialCharTok{==}\NormalTok{ current\_bird,]}
+\NormalTok{  start\_rec }\OtherTok{\textless{}{-}} \FunctionTok{head}\NormalTok{(curr\_records, }\AttributeTok{n=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{timestamp}
+\NormalTok{  stop\_rec }\OtherTok{\textless{}{-}} \FunctionTok{tail}\NormalTok{(curr\_records, }\AttributeTok{n=}\DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{timestamp}
+\NormalTok{  n\_days }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{difftime}\NormalTok{(}\FunctionTok{ymd\_hms}\NormalTok{(stop\_rec), }\FunctionTok{ymd\_hms}\NormalTok{(start\_rec),}\AttributeTok{units =} \StringTok{"days"}\NormalTok{)),}\DecValTok{3}\NormalTok{)}
+\NormalTok{  new\_row }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(current\_bird,start\_rec, stop\_rec, n\_days)}
+  
+\NormalTok{  start\_stop\_table }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(start\_stop\_table, new\_row)}
+\NormalTok{\}}
+
+\FunctionTok{colnames}\NormalTok{(start\_stop\_table) }\OtherTok{\textless{}{-}}  \FunctionTok{c}\NormalTok{(}\StringTok{"bird id"}\NormalTok{,}\StringTok{"start"}\NormalTok{,}\StringTok{"stop"}\NormalTok{,}\StringTok{"n days"}\NormalTok{)}
+
+\NormalTok{(start\_stop\_table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    bird id                   start                    stop  n days
+## 1        8 2013-06-18 23:26:49.000 2014-06-18 22:02:41.000 364.942
+## 2       12 2013-06-20 16:49:51.000 2015-09-01 04:52:41.000 802.502
+## 3       22 2013-06-20 17:37:38.000 2015-09-01 03:07:07.000 802.395
+## 4       47 2013-07-03 16:06:48.000 2015-09-01 04:31:54.000 789.517
+## 5       48 2013-07-03 19:10:03.000 2014-09-22 16:35:20.000 445.893
+## 6       57 2013-07-05 16:43:23.000 2014-03-21 19:44:56.000 259.126
+## 7      123 2014-04-23 19:44:16.000 2015-09-01 04:48:56.000 495.378
+## 8       92 2013-08-02 12:47:47.000 2015-09-01 04:21:36.000 759.648
+## 9      108 2014-04-21 18:40:25.000 2015-09-01 04:20:15.000 497.403
+## 10     126 2014-05-01 13:38:20.000 2015-09-01 04:54:57.000 487.637
+## 11       1 2013-06-26 14:07:33.000 2015-09-01 04:28:52.000 796.598
+## 12       3 2013-06-26 14:38:58.000 2015-09-01 04:52:35.000 796.593
+## 13       6 2013-06-17 13:19:20.000 2015-09-01 04:37:25.000 805.638
+## 14      13 2013-06-27 18:49:55.000 2013-12-21 15:16:23.000 176.852
+## 15      60 2013-07-05 12:52:58.000 2015-09-01 04:58:46.000 787.671
+## 16      75 2013-07-09 15:31:45.000 2015-09-01 04:46:12.000 783.552
+## 17      90 2013-07-30 14:34:17.000 2015-09-01 02:56:53.000 762.516
+## 18      91 2013-07-31 15:52:51.000 2015-09-01 04:55:41.000 761.544
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Simple plot of the data points for one individual
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#select bird 91}
+
+\NormalTok{id }\OtherTok{\textless{}{-}} \DecValTok{91}
+
+\CommentTok{\#subset whole dataset}
+
+\NormalTok{vulture\_91 }\OtherTok{\textless{}{-}}\NormalTok{ vulture\_dat[vulture\_dat}\SpecialCharTok{$}\NormalTok{individual.local.identifier }\SpecialCharTok{==} \DecValTok{91}\NormalTok{,]}
+
+\FunctionTok{plot}\NormalTok{(vulture\_91}\SpecialCharTok{$}\NormalTok{location.long, vulture\_91}\SpecialCharTok{$}\NormalTok{location.lat)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/plot the data for 91-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(vulture\_91, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{location.long, }\AttributeTok{y=}\NormalTok{location.lat))}\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/plot the data for 91-2.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
 \item
   Estimate home range for one individual using three methods of your own
   choice.
+\item
+  Choose Individual and generate Tracks
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vulture\_91 }\OtherTok{\textless{}{-}}\NormalTok{ vulture\_dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(individual.local.identifier }\SpecialCharTok{==} \DecValTok{91}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(vulture\_91)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     event.id visible               timestamp location.long location.lat
+## 1 3383407128    true 2013-07-31 15:52:51.000     -81.64166     33.16277
+## 2 3383365434    true 2013-07-31 15:54:06.000     -81.64163     33.16284
+## 3 3383282583    true 2013-07-31 15:55:20.000     -81.64163     33.16282
+## 4 3383407129    true 2013-07-31 15:56:28.000     -81.64168     33.16279
+## 5 3383282584    true 2013-07-31 15:58:21.000     -81.64163     33.16279
+## 6 3383282585    true 2013-07-31 16:00:19.000     -81.64157     33.16281
+##   gps.hdop gps.satellite.count gps.vdop ground.speed heading
+## 1      0.9                   9      1.4            0       0
+## 2      0.9                   9      1.4            0       0
+## 3      0.9                   9      1.4            0       0
+## 4      0.9                   9      1.4            0      58
+## 5      0.9                   9      1.4            0       0
+## 6      0.9                   9      1.4            0     236
+##   height.above.ellipsoid manually.marked.outlier sensor.type
+## 1                     53                      NA         gps
+## 2                     66                      NA         gps
+## 3                     59                      NA         gps
+## 4                     74                      NA         gps
+## 5                     77                      NA         gps
+## 6                     75                      NA         gps
+##   individual.taxon.canonical.name tag.local.identifier
+## 1                  Cathartes aura                  179
+## 2                  Cathartes aura                  179
+## 3                  Cathartes aura                  179
+## 4                  Cathartes aura                  179
+## 5                  Cathartes aura                  179
+## 6                  Cathartes aura                  179
+##   individual.local.identifier
+## 1                          91
+## 2                          91
+## 3                          91
+## 4                          91
+## 5                          91
+## 6                          91
+##                                            study.name
+## 1 Black Vultures and Turkey Vultures Southeastern USA
+## 2 Black Vultures and Turkey Vultures Southeastern USA
+## 3 Black Vultures and Turkey Vultures Southeastern USA
+## 4 Black Vultures and Turkey Vultures Southeastern USA
+## 5 Black Vultures and Turkey Vultures Southeastern USA
+## 6 Black Vultures and Turkey Vultures Southeastern USA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check timestamp}
+\FunctionTok{class}\NormalTok{(vulture\_91}\SpecialCharTok{$}\NormalTok{timestamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# convert timestamp to posixct format}
+\NormalTok{vulture\_91}\SpecialCharTok{$}\NormalTok{timestamp }\OtherTok{\textless{}{-}} \FunctionTok{ymd\_hms}\NormalTok{(vulture\_91}\SpecialCharTok{$}\NormalTok{timestamp, }\AttributeTok{tz =} \StringTok{"UTC"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(vulture\_91}\SpecialCharTok{$}\NormalTok{timestamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2013-07-31 15:52:51 UTC" "2013-07-31 15:54:06 UTC"
+## [3] "2013-07-31 15:55:20 UTC" "2013-07-31 15:56:28 UTC"
+## [5] "2013-07-31 15:58:21 UTC" "2013-07-31 16:00:19 UTC"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(vulture\_91}\SpecialCharTok{$}\NormalTok{timestamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  POSIXct[1:187316], format: "2013-07-31 15:52:51" "2013-07-31 15:54:06" "2013-07-31 15:55:20" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make track for vulture 91}
+\NormalTok{trk\_91 }\OtherTok{\textless{}{-}} \FunctionTok{make\_track}\NormalTok{(vulture\_91, location.long,location.lat, timestamp, }\AttributeTok{id =}\NormalTok{ individual.local.identifier, }\AttributeTok{crs =} \DecValTok{4326}\NormalTok{)}
+
+\CommentTok{\# save this file to disk}
+\FunctionTok{saveRDS}\NormalTok{(trk\_91, }\AttributeTok{file =} \StringTok{"../output/vulture\_91\_gps\_data\_track.rds"}\NormalTok{)}
+
+\CommentTok{\# check sampling rate for bird 91}
+\FunctionTok{summarize\_sampling\_rate}\NormalTok{(trk\_91)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 9
+##     min    q1 median  mean    q3   max    sd      n unit 
+##   <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl>  <int> <chr>
+## 1  0.55     1   1.03  5.85  1.98 1492.  14.4 187315 min
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This suggests that the median sampling rate is 2h, but varying up to}
+\CommentTok{\# 12h. We can now resample the whole track to 2h interval (with tolerance of}
+\CommentTok{\# 10 min), so that if there are more than 2h between relocations, they will }
+\CommentTok{\# be divided into different bursts.}
+
+\NormalTok{trk\_91\_resamp }\OtherTok{\textless{}{-}} \FunctionTok{track\_resample}\NormalTok{(trk\_91, }\AttributeTok{rate =} \FunctionTok{minutes}\NormalTok{(}\DecValTok{1}\NormalTok{), }\AttributeTok{tolerance =} \FunctionTok{minutes}\NormalTok{(}\DecValTok{1490}\NormalTok{))}
+
+\CommentTok{\# add step length as a new col}
+\NormalTok{trk\_91\_sl }\OtherTok{\textless{}{-}}\NormalTok{ trk\_91\_resamp }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sl =} \FunctionTok{step\_lengths}\NormalTok{(.)) }
+
+\CommentTok{\# calculate steps by burst}
+\NormalTok{trk\_91\_sbb }\OtherTok{\textless{}{-}}\NormalTok{ trk\_91\_resamp }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{steps\_by\_burst}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  MCP Home Range
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcps }\OtherTok{\textless{}{-}} \FunctionTok{hr\_mcp}\NormalTok{(trk\_91, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\FloatTok{0.95}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\NormalTok{mcps}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $mcp
+## Simple feature collection with 4 features and 3 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -81.81408 ymin: 32.77979 xmax: -81.16542 ymax: 33.9309
+## Geodetic CRS:  WGS 84
+##   level     what             area                       geometry
+## 1  0.50 estimate  440882403 [m^2] POLYGON ((-81.39618 33.1804...
+## 2  0.75 estimate 1401770831 [m^2] POLYGON ((-81.29887 33.2017...
+## 3  0.95 estimate 5006729740 [m^2] POLYGON ((-81.17934 33.1347...
+## 4  1.00 estimate 5983974085 [m^2] POLYGON ((-81.17934 33.1347...
+## 
+## $levels
+## [1] 0.50 0.75 0.95 1.00
+## 
+## $estimator
+## [1] "mcp"
+## 
+## $crs
+## Coordinate Reference System:
+##   User input: EPSG:4326 
+##   wkt:
+## GEOGCRS["WGS 84",
+##     ENSEMBLE["World Geodetic System 1984 ensemble",
+##         MEMBER["World Geodetic System 1984 (Transit)"],
+##         MEMBER["World Geodetic System 1984 (G730)"],
+##         MEMBER["World Geodetic System 1984 (G873)"],
+##         MEMBER["World Geodetic System 1984 (G1150)"],
+##         MEMBER["World Geodetic System 1984 (G1674)"],
+##         MEMBER["World Geodetic System 1984 (G1762)"],
+##         MEMBER["World Geodetic System 1984 (G2139)"],
+##         ELLIPSOID["WGS 84",6378137,298.257223563,
+##             LENGTHUNIT["metre",1]],
+##         ENSEMBLEACCURACY[2.0]],
+##     PRIMEM["Greenwich",0,
+##         ANGLEUNIT["degree",0.0174532925199433]],
+##     CS[ellipsoidal,2],
+##         AXIS["geodetic latitude (Lat)",north,
+##             ORDER[1],
+##             ANGLEUNIT["degree",0.0174532925199433]],
+##         AXIS["geodetic longitude (Lon)",east,
+##             ORDER[2],
+##             ANGLEUNIT["degree",0.0174532925199433]],
+##     USAGE[
+##         SCOPE["Horizontal component of 3D system."],
+##         AREA["World."],
+##         BBOX[-90,-180,90,180]],
+##     ID["EPSG",4326]]
+## 
+## $data
+## # A tibble: 187,316 x 4
+##       x_    y_ t_                     id
+##  * <dbl> <dbl> <dttm>              <int>
+##  1 -81.6  33.2 2013-07-31 15:52:51    91
+##  2 -81.6  33.2 2013-07-31 15:54:06    91
+##  3 -81.6  33.2 2013-07-31 15:55:20    91
+##  4 -81.6  33.2 2013-07-31 15:56:28    91
+##  5 -81.6  33.2 2013-07-31 15:58:21    91
+##  6 -81.6  33.2 2013-07-31 16:00:19    91
+##  7 -81.6  33.2 2013-07-31 16:02:13    91
+##  8 -81.6  33.2 2013-07-31 16:04:07    91
+##  9 -81.6  33.2 2013-07-31 16:06:50    91
+## 10 -81.6  33.2 2013-07-31 16:08:45    91
+## # i 187,306 more rows
+## 
+## attr(,"class")
+## [1] "mcp"     "hr_geom" "hr"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get area in km\^{}2}
+\FunctionTok{hr\_area}\NormalTok{(mcps, }\AttributeTok{units =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{area =}\NormalTok{ units}\SpecialCharTok{::}\FunctionTok{set\_units}\NormalTok{(area, }\StringTok{"km\^{}2"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 3
+##   level what       area
+##   <dbl> <chr>    [km^2]
+## 1  1    estimate  5984.
+## 2  0.95 estimate  5007.
+## 3  0.75 estimate  1402.
+## 4  0.5  estimate   441.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot the polygon isopleths by themeself}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hr\_isopleths}\NormalTok{(mcps)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/mcp home range estimation for 91-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the isopleth with data on top}
+\FunctionTok{plot}\NormalTok{(mcps) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/mcp home range estimation for 91-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)}
+
+\FunctionTok{hr\_isopleths}\NormalTok{(mcps) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# Make level a factor for discrete color scales}
+  \CommentTok{\# Can control order and labels here}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{level =} \FunctionTok{factor}\NormalTok{(level, }
+                        \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"0.95"}\NormalTok{, }\StringTok{"0.75"}\NormalTok{, }\StringTok{"0.5"}\NormalTok{),}
+                        \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"100\%"}\NormalTok{, }\StringTok{"95\%"}\NormalTok{, }\StringTok{"75\%"}\NormalTok{, }\StringTok{"50\%"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ level), }
+          \AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mcps}\SpecialCharTok{$}\NormalTok{data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_, }\AttributeTok{y =}\NormalTok{ y\_),}
+             \AttributeTok{color =} \StringTok{"gray30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{name =} \StringTok{"MCP Level"}\NormalTok{,}
+                     \AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{, }
+        \AttributeTok{legend.box.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/mcp home range estimation for 91-3.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Kernel density estimation of Home Range
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kdes }\OtherTok{\textless{}{-}} \FunctionTok{hr\_kde}\NormalTok{(trk\_91, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.95}\NormalTok{),)}
+
+\CommentTok{\# Get area in km\^{}2}
+\FunctionTok{hr\_area}\NormalTok{(kdes, }\AttributeTok{units =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{area =}\NormalTok{ units}\SpecialCharTok{::}\FunctionTok{set\_units}\NormalTok{(area, }\StringTok{"km\^{}2"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+##   level what       area
+##   <dbl> <chr>    [km^2]
+## 1  0.95 estimate  2689.
+## 2  0.5  estimate   169.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot the polygon isopleths by themeself}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hr\_isopleths}\NormalTok{(kdes)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/KDE home range estimation for 91-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the isopleth with data on top}
+\FunctionTok{plot}\NormalTok{(kdes) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/KDE home range estimation for 91-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)}
+
+\FunctionTok{hr\_isopleths}\NormalTok{(kdes) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# Make level a factor for discrete color scales}
+  \CommentTok{\# Can control order and labels here}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{level =} \FunctionTok{factor}\NormalTok{(level, }
+                        \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"0.95"}\NormalTok{, }\StringTok{"0.75"}\NormalTok{, }\StringTok{"0.5"}\NormalTok{),}
+                        \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"100\%"}\NormalTok{, }\StringTok{"95\%"}\NormalTok{, }\StringTok{"75\%"}\NormalTok{, }\StringTok{"50\%"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ level), }
+          \AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mcps}\SpecialCharTok{$}\NormalTok{data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_, }\AttributeTok{y =}\NormalTok{ y\_),}
+             \AttributeTok{color =} \StringTok{"gray30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{name =} \StringTok{"MCP Level"}\NormalTok{,}
+                     \AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{, }
+        \AttributeTok{legend.box.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/KDE home range estimation for 91-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hr\_overlap}\NormalTok{(mcps,kdes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 2
+##   levels overlap
+##    <dbl>   <dbl>
+## 1   1     0.449 
+## 2   0.95  0.0337
+## 3   0.75  0     
+## 4   0.5   0
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Autocorrelated Kernel Density estimator of home range
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Without going into detail on the different CTMMs, we\textquotesingle{}ll demonstrate fitting}
+\CommentTok{\# an aKDE with an Ornstein{-}Uhlenbeck model.}
+\NormalTok{akdes }\OtherTok{\textless{}{-}} \FunctionTok{hr\_akde}\NormalTok{(trk\_91, }\AttributeTok{model =} \FunctionTok{fit\_ctmm}\NormalTok{(trk\_91, }\StringTok{"iid"}\NormalTok{), }\AttributeTok{levels =} \FloatTok{0.95}\NormalTok{)}
+
+\CommentTok{\# Get area in km\^{}2}
+\FunctionTok{hr\_area}\NormalTok{(akdes, }\AttributeTok{units =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{area =}\NormalTok{ units}\SpecialCharTok{::}\FunctionTok{set\_units}\NormalTok{(area, }\StringTok{"km\^{}2"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   level what         area
+##   <dbl> <chr>      [km^2]
+## 1  0.95 lci (0.95)  2640.
+## 2  0.95 estimate    2651.
+## 3  0.95 uci (0.95)  2662.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot the polygon isopleths by themeself}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hr\_isopleths}\NormalTok{(akdes)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the isopleth with data on top}
+\FunctionTok{plot}\NormalTok{(akdes) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/unnamed-chunk-1-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)}
+
+\FunctionTok{hr\_isopleths}\NormalTok{(akdes) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# Make level a factor for discrete color scales}
+  \CommentTok{\# Can control order and labels here}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{level =} \FunctionTok{factor}\NormalTok{(level, }
+                        \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"0.95"}\NormalTok{, }\StringTok{"0.75"}\NormalTok{, }\StringTok{"0.5"}\NormalTok{),}
+                        \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"100\%"}\NormalTok{, }\StringTok{"95\%"}\NormalTok{, }\StringTok{"75\%"}\NormalTok{, }\StringTok{"50\%"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ level), }
+          \AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mcps}\SpecialCharTok{$}\NormalTok{data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_, }\AttributeTok{y =}\NormalTok{ y\_),}
+             \AttributeTok{color =} \StringTok{"gray30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{name =} \StringTok{"MCP Level"}\NormalTok{,}
+                     \AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{, }
+        \AttributeTok{legend.box.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/unnamed-chunk-1-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hr\_overlap}\NormalTok{(kdes,akdes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   levels overlap
+##    <dbl>   <dbl>
+## 1   0.95   0.959
+## 2   0.5    1
+\end{verbatim}
+
+\hypertarget{examine-bird-108}{%
+\subsubsection{Examine Bird 108}\label{examine-bird-108}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Simple plot of the data points for one individual
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#select bird 108}
+
+\NormalTok{id }\OtherTok{\textless{}{-}} \DecValTok{108}
+
+\CommentTok{\#subset whole dataset}
+
+\NormalTok{vulture\_108 }\OtherTok{\textless{}{-}}\NormalTok{ vulture\_dat[vulture\_dat}\SpecialCharTok{$}\NormalTok{individual.local.identifier }\SpecialCharTok{==} \DecValTok{108}\NormalTok{,]}
+
+\FunctionTok{plot}\NormalTok{(vulture\_108}\SpecialCharTok{$}\NormalTok{location.long, vulture\_108}\SpecialCharTok{$}\NormalTok{location.lat)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/plot the data-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(vulture\_108, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{location.long, }\AttributeTok{y=}\NormalTok{location.lat))}\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/plot the data-2.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Estimate home range for one individual using three methods of your own
+  choice.
+\item
+  Choose Individual and generate Tracks
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vulture\_108 }\OtherTok{\textless{}{-}}\NormalTok{ vulture\_dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(individual.local.identifier }\SpecialCharTok{==} \DecValTok{108}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(vulture\_108)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     event.id visible               timestamp location.long location.lat
+## 1 3381246783    true 2014-04-21 18:40:25.000     -81.73844     33.26194
+## 2 3381246784    true 2014-04-21 18:52:55.000     -81.73833     33.26218
+## 3 3381246785    true 2014-04-21 19:05:17.000     -81.73848     33.26196
+## 4 3381246786    true 2014-04-21 19:18:03.000     -81.73826     33.26196
+## 5 3381246787    true 2014-04-21 19:31:25.000     -81.73846     33.26190
+## 6 3381246788    true 2014-04-21 19:44:51.000     -81.73858     33.26191
+##   gps.hdop gps.satellite.count gps.vdop ground.speed heading
+## 1      1.7                   6      2.4            0       0
+## 2      1.9                   5      2.4            0     263
+## 3      1.6                   6      2.2            0       0
+## 4      2.1                   6      3.3            0       0
+## 5      2.9                   6      4.9            0       0
+## 6      5.6                   6      9.6            0      59
+##   height.above.ellipsoid manually.marked.outlier sensor.type
+## 1                     29                      NA         gps
+## 2                     60                      NA         gps
+## 3                     63                      NA         gps
+## 4                     61                      NA         gps
+## 5                     77                      NA         gps
+## 6                     77                      NA         gps
+##   individual.taxon.canonical.name tag.local.identifier
+## 1                Coragyps atratus                  168
+## 2                Coragyps atratus                  168
+## 3                Coragyps atratus                  168
+## 4                Coragyps atratus                  168
+## 5                Coragyps atratus                  168
+## 6                Coragyps atratus                  168
+##   individual.local.identifier
+## 1                         108
+## 2                         108
+## 3                         108
+## 4                         108
+## 5                         108
+## 6                         108
+##                                            study.name
+## 1 Black Vultures and Turkey Vultures Southeastern USA
+## 2 Black Vultures and Turkey Vultures Southeastern USA
+## 3 Black Vultures and Turkey Vultures Southeastern USA
+## 4 Black Vultures and Turkey Vultures Southeastern USA
+## 5 Black Vultures and Turkey Vultures Southeastern USA
+## 6 Black Vultures and Turkey Vultures Southeastern USA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check timestamp}
+\FunctionTok{class}\NormalTok{(vulture\_108}\SpecialCharTok{$}\NormalTok{timestamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# convert timestamp to posixct format}
+\NormalTok{vulture\_108}\SpecialCharTok{$}\NormalTok{timestamp }\OtherTok{\textless{}{-}} \FunctionTok{ymd\_hms}\NormalTok{(vulture\_108}\SpecialCharTok{$}\NormalTok{timestamp, }\AttributeTok{tz =} \StringTok{"UTC"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(vulture\_108}\SpecialCharTok{$}\NormalTok{timestamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2014-04-21 18:40:25 UTC" "2014-04-21 18:52:55 UTC"
+## [3] "2014-04-21 19:05:17 UTC" "2014-04-21 19:18:03 UTC"
+## [5] "2014-04-21 19:31:25 UTC" "2014-04-21 19:44:51 UTC"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(vulture\_108}\SpecialCharTok{$}\NormalTok{timestamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  POSIXct[1:87646], format: "2014-04-21 18:40:25" "2014-04-21 18:52:55" "2014-04-21 19:05:17" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make track for vulture 91}
+\NormalTok{trk\_108 }\OtherTok{\textless{}{-}} \FunctionTok{make\_track}\NormalTok{(vulture\_108, location.long,location.lat, timestamp, }\AttributeTok{id =}\NormalTok{ individual.local.identifier, }\AttributeTok{crs =} \DecValTok{4326}\NormalTok{)}
+
+\CommentTok{\# save this file to disk}
+\FunctionTok{saveRDS}\NormalTok{(trk\_108, }\AttributeTok{file =} \StringTok{"../output/vulture\_108\_gps\_data\_track.rds"}\NormalTok{)}
+
+\CommentTok{\# check sampling rate for bird 108}
+\FunctionTok{summarize\_sampling\_rate}\NormalTok{(trk\_108)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 9
+##     min    q1 median  mean    q3   max    sd     n unit 
+##   <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <int> <chr>
+## 1 0.667  1.02   1.77  8.17  6.28  300.  15.8 87645 min
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This suggests that the median sampling rate is 2h, but varying up to}
+\CommentTok{\# 12h. We can now resample the whole track to 2h interval (with tolerance of}
+\CommentTok{\# 10 min), so that if there are more than 2h between relocations, they will }
+\CommentTok{\# be divided into different bursts.}
+
+\NormalTok{trk\_108\_resamp }\OtherTok{\textless{}{-}} \FunctionTok{track\_resample}\NormalTok{(trk\_108, }\AttributeTok{rate =} \FunctionTok{minutes}\NormalTok{(}\DecValTok{2}\NormalTok{), }\AttributeTok{tolerance =} \FunctionTok{minutes}\NormalTok{(}\DecValTok{300}\NormalTok{))}
+
+\CommentTok{\# add step length as a new col}
+\NormalTok{trk\_108\_sl }\OtherTok{\textless{}{-}}\NormalTok{ trk\_108\_resamp }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sl =} \FunctionTok{step\_lengths}\NormalTok{(.)) }
+
+\CommentTok{\# calculate steps by burst}
+\NormalTok{trk\_108\_sbb }\OtherTok{\textless{}{-}}\NormalTok{ trk\_108\_resamp }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{steps\_by\_burst}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  MCP Home Range
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mcps }\OtherTok{\textless{}{-}} \FunctionTok{hr\_mcp}\NormalTok{(trk\_108, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.75}\NormalTok{, }\FloatTok{0.95}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\NormalTok{mcps}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $mcp
+## Simple feature collection with 4 features and 3 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -82.51917 ymin: 32.52645 xmax: -81.40612 ymax: 33.86881
+## Geodetic CRS:  WGS 84
+##   level     what             area                       geometry
+## 1  0.50 estimate  858545605 [m^2] POLYGON ((-81.8695 33.16665...
+## 2  0.75 estimate 2743379417 [m^2] POLYGON ((-81.73823 33.2636...
+## 3  0.95 estimate 6871757454 [m^2] POLYGON ((-81.50507 32.8004...
+## 4  1.00 estimate 8166896342 [m^2] POLYGON ((-81.40612 32.7443...
+## 
+## $levels
+## [1] 0.50 0.75 0.95 1.00
+## 
+## $estimator
+## [1] "mcp"
+## 
+## $crs
+## Coordinate Reference System:
+##   User input: EPSG:4326 
+##   wkt:
+## GEOGCRS["WGS 84",
+##     ENSEMBLE["World Geodetic System 1984 ensemble",
+##         MEMBER["World Geodetic System 1984 (Transit)"],
+##         MEMBER["World Geodetic System 1984 (G730)"],
+##         MEMBER["World Geodetic System 1984 (G873)"],
+##         MEMBER["World Geodetic System 1984 (G1150)"],
+##         MEMBER["World Geodetic System 1984 (G1674)"],
+##         MEMBER["World Geodetic System 1984 (G1762)"],
+##         MEMBER["World Geodetic System 1984 (G2139)"],
+##         ELLIPSOID["WGS 84",6378137,298.257223563,
+##             LENGTHUNIT["metre",1]],
+##         ENSEMBLEACCURACY[2.0]],
+##     PRIMEM["Greenwich",0,
+##         ANGLEUNIT["degree",0.0174532925199433]],
+##     CS[ellipsoidal,2],
+##         AXIS["geodetic latitude (Lat)",north,
+##             ORDER[1],
+##             ANGLEUNIT["degree",0.0174532925199433]],
+##         AXIS["geodetic longitude (Lon)",east,
+##             ORDER[2],
+##             ANGLEUNIT["degree",0.0174532925199433]],
+##     USAGE[
+##         SCOPE["Horizontal component of 3D system."],
+##         AREA["World."],
+##         BBOX[-90,-180,90,180]],
+##     ID["EPSG",4326]]
+## 
+## $data
+## # A tibble: 87,646 x 4
+##       x_    y_ t_                            id
+##  * <dbl> <dbl> <dttm>                     <int>
+##  1 -81.7  33.3 2014-04-21 18:40:25.000000   108
+##  2 -81.7  33.3 2014-04-21 18:52:55.000000   108
+##  3 -81.7  33.3 2014-04-21 19:05:17.000000   108
+##  4 -81.7  33.3 2014-04-21 19:18:03.000000   108
+##  5 -81.7  33.3 2014-04-21 19:31:25.000000   108
+##  6 -81.7  33.3 2014-04-21 19:44:51.000000   108
+##  7 -81.7  33.3 2014-04-21 19:53:19.000000   108
+##  8 -81.7  33.3 2014-04-21 19:58:48.000000   108
+##  9 -81.7  33.3 2014-04-21 20:03:08.000000   108
+## 10 -81.7  33.3 2014-04-21 20:09:16.000000   108
+## # i 87,636 more rows
+## 
+## attr(,"class")
+## [1] "mcp"     "hr_geom" "hr"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get area in km\^{}2}
+\FunctionTok{hr\_area}\NormalTok{(mcps, }\AttributeTok{units =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{area =}\NormalTok{ units}\SpecialCharTok{::}\FunctionTok{set\_units}\NormalTok{(area, }\StringTok{"km\^{}2"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 3
+##   level what       area
+##   <dbl> <chr>    [km^2]
+## 1  1    estimate  8167.
+## 2  0.95 estimate  6872.
+## 3  0.75 estimate  2743.
+## 4  0.5  estimate   859.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot the polygon isopleths by themeself}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hr\_isopleths}\NormalTok{(mcps)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/mcp home range estimation-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the isopleth with data on top}
+\FunctionTok{plot}\NormalTok{(mcps) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/mcp home range estimation-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)}
+
+\FunctionTok{hr\_isopleths}\NormalTok{(mcps) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# Make level a factor for discrete color scales}
+  \CommentTok{\# Can control order and labels here}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{level =} \FunctionTok{factor}\NormalTok{(level, }
+                        \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"0.95"}\NormalTok{, }\StringTok{"0.75"}\NormalTok{, }\StringTok{"0.5"}\NormalTok{),}
+                        \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"100\%"}\NormalTok{, }\StringTok{"95\%"}\NormalTok{, }\StringTok{"75\%"}\NormalTok{, }\StringTok{"50\%"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ level), }
+          \AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mcps}\SpecialCharTok{$}\NormalTok{data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_, }\AttributeTok{y =}\NormalTok{ y\_),}
+             \AttributeTok{color =} \StringTok{"gray30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{name =} \StringTok{"MCP Level"}\NormalTok{,}
+                     \AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{, }
+        \AttributeTok{legend.box.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/mcp home range estimation-3.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Kernel density estimation of Home Range
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kdes }\OtherTok{\textless{}{-}} \FunctionTok{hr\_kde}\NormalTok{(trk\_108, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.95}\NormalTok{),)}
+
+\CommentTok{\# Get area in km\^{}2}
+\FunctionTok{hr\_area}\NormalTok{(kdes, }\AttributeTok{units =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{area =}\NormalTok{ units}\SpecialCharTok{::}\FunctionTok{set\_units}\NormalTok{(area, }\StringTok{"km\^{}2"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+##   level what       area
+##   <dbl> <chr>    [km^2]
+## 1  0.95 estimate  3506.
+## 2  0.5  estimate   537.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot the polygon isopleths by themeself}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hr\_isopleths}\NormalTok{(kdes)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/KDE home range estimation-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the isopleth with data on top}
+\FunctionTok{plot}\NormalTok{(kdes) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/KDE home range estimation-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)}
+
+\FunctionTok{hr\_isopleths}\NormalTok{(kdes) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# Make level a factor for discrete color scales}
+  \CommentTok{\# Can control order and labels here}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{level =} \FunctionTok{factor}\NormalTok{(level, }
+                        \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"0.95"}\NormalTok{, }\StringTok{"0.75"}\NormalTok{, }\StringTok{"0.5"}\NormalTok{),}
+                        \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"100\%"}\NormalTok{, }\StringTok{"95\%"}\NormalTok{, }\StringTok{"75\%"}\NormalTok{, }\StringTok{"50\%"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ level), }
+          \AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mcps}\SpecialCharTok{$}\NormalTok{data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_, }\AttributeTok{y =}\NormalTok{ y\_),}
+             \AttributeTok{color =} \StringTok{"gray30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{name =} \StringTok{"MCP Level"}\NormalTok{,}
+                     \AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{, }
+        \AttributeTok{legend.box.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/KDE home range estimation-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hr\_overlap}\NormalTok{(mcps,kdes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 2
+##   levels overlap
+##    <dbl>   <dbl>
+## 1   1     0.419 
+## 2   0.95  0.0782
+## 3   0.75  0     
+## 4   0.5   0
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Autocorrelated Kernel Density estimator of home range
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Without going into detail on the different CTMMs, we\textquotesingle{}ll demonstrate fitting}
+\CommentTok{\# an aKDE with an Ornstein{-}Uhlenbeck model.}
+\NormalTok{akdes }\OtherTok{\textless{}{-}} \FunctionTok{hr\_akde}\NormalTok{(trk\_108, }\AttributeTok{model =} \FunctionTok{fit\_ctmm}\NormalTok{(trk\_108, }\StringTok{"ou"}\NormalTok{), }\AttributeTok{levels =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Default grid size of 35.3333333333333 seconds chosen for bandwidth(...,fast=TRUE).
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get area in km\^{}2}
+\FunctionTok{hr\_area}\NormalTok{(akdes, }\AttributeTok{units =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{area =}\NormalTok{ units}\SpecialCharTok{::}\FunctionTok{set\_units}\NormalTok{(area, }\StringTok{"km\^{}2"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   level what         area
+##   <dbl> <chr>      [km^2]
+## 1  0.95 lci (0.95)  4861.
+## 2  0.95 estimate    9858.
+## 3  0.95 uci (0.95) 16588.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot the polygon isopleths by themeself}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{hr\_isopleths}\NormalTok{(akdes)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot the isopleth with data on top}
+\FunctionTok{plot}\NormalTok{(akdes) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/unnamed-chunk-2-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Custom plot with ggplot2 (thanks to Brian Smith for this code chunk)}
+
+\FunctionTok{hr\_isopleths}\NormalTok{(akdes) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# Make level a factor for discrete color scales}
+  \CommentTok{\# Can control order and labels here}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{level =} \FunctionTok{factor}\NormalTok{(level, }
+                        \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"0.95"}\NormalTok{, }\StringTok{"0.75"}\NormalTok{, }\StringTok{"0.5"}\NormalTok{),}
+                        \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"100\%"}\NormalTok{, }\StringTok{"95\%"}\NormalTok{, }\StringTok{"75\%"}\NormalTok{, }\StringTok{"50\%"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ level), }
+          \AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ mcps}\SpecialCharTok{$}\NormalTok{data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_, }\AttributeTok{y =}\NormalTok{ y\_),}
+             \AttributeTok{color =} \StringTok{"gray30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{name =} \StringTok{"MCP Level"}\NormalTok{,}
+                     \AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{, }
+        \AttributeTok{legend.box.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{initial_analysis_files/figure-latex/unnamed-chunk-2-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hr\_overlap}\NormalTok{(kdes, akdes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   levels overlap
+##    <dbl>   <dbl>
+## 1   0.95   0.795
+## 2   0.5    1.00
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
 \item
   Explore the movement of all animals in the data set extracting a
   continuous covariate (for example elevation or distance to roads) to
