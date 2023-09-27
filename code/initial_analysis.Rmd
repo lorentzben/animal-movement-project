@@ -464,7 +464,7 @@ hr_overlap(kdes, akdes)
 3. Explore the movement of all animals in the data set extracting a continuous covariate
 (for example elevation or distance to roads) to the data. Extract the covariate both at the end points and along the steps. Explore the differences between the two ways of extracting the data, for example fitting a linear regression with step length as response variable and the extracted variable as explanatory variable.
 
-```{r}
+```{r eval=FALSE, include=TRUE}
 library(terra)
 library(amt)
 
@@ -561,8 +561,13 @@ sort(vulture_dat$location.long)
 # -82.81824
 
 r <- rast(xmin=0, xmax=3360000, ymin=-3340000, ymax=0, nrows=3360000, ncols=3340000)
+```
 
-land_use <- terra::rast("../data/land_cover_2020_30m_tif/NA_NALCMS_landcover_2020_30m/data/NA_NALCMS_landcover_2020_30m.tif")
+
+```{r evaluate land use, eval=FALSE, include=TRUE}
+land_use <- terra::rast("../data/USA_NALCMS_landcover_2020_30m.tif")
+
+plot(land_use)
 
 crs(r) <- crs(land_use)
 
@@ -570,10 +575,145 @@ cm <- crop(land_use, r)
 
 land_use
 land_use <- as.factor(land_use)
+write.csv(levels(land_use)[[1]],'../intermediate/raw_land_use_class.csv', row.names = F)
 plot(land_use) 
-levels(land_use)
+
+new_land_use_class <- read.csv("../intermediate/edit_land_use_class.csv")
+
+levels(land_use) <- new_land_use_class
+
+vulture_dat$timestamp <- ymd_hms(vulture_dat$timestamp, tz = "UTC")
+
+dat2 <- vulture_dat |> 
+  # nest by id
+  nest(data = -individual.local.identifier) |>
+  mutate(track = map(data, ~make_track(.x, location.long,location.lat, timestamp, crs = 4326))) |>
+  mutate(track_sum = map(track, ~summarize_sampling_rate(.x))) |>
+  # create new list column by resampling the data and computing steps
+  # this creates a new column with resampled track objects with step properties
+  mutate(data.resampled.steps = map(track, ~ .x |> 
+  track_resample(rate = minutes(2), tolerance = minutes(300)) |>
+  steps_by_burst())) |> 
+  # select only id and resampled.step columns
+  # (we do not need the original data.frame anymore)
+  dplyr::select(individual.local.identifier, data.resampled.steps) |> 
+  mutate(extracted_covars = map(data.resampled.steps, ~extract_covariates(.x, land_use, where="start"))) |> 
+  dplyr::select(individual.local.identifier, extracted_covars) |>
+  # unnest 
+  unnest(cols = extracted_covars)
+
+dat3 <- vulture_dat |> 
+  # nest by id
+  nest(data = -individual.local.identifier) |>
+  mutate(track = map(data, ~make_track(.x, location.long,location.lat, timestamp, crs = 4326))) |>
+  # create new list column by resampling the data and computing steps
+  # this creates a new column with resampled track objects with step properties
+  mutate(data.resampled.steps = map(track, ~ .x |> 
+  track_resample(rate = minutes(2), tolerance = minutes(300)) |>
+  steps_by_burst())) |> 
+  # select only id and resampled.step columns
+  # (we do not need the original data.frame anymore)
+  dplyr::select(individual.local.identifier, data.resampled.steps) |> 
+  mutate(extracted_covars = map(data.resampled.steps, ~extract_covariates(.x, land_use, where="end"))) |> 
+  dplyr::select(individual.local.identifier, extracted_covars) |>
+  # unnest 
+  unnest(cols = extracted_covars)
+
+dat2 |>
+  drop_na() |>
+  ggplot(aes(x=class, y=sl_))+
+  geom_point()
+  geom_histogram()+
+  coord_flip()
+
+
 ```
 
 
+```{r evaluate elevation}
+elevation <- terra::rast("../data/30n090w_20101117_gmted_mea075.tif")
+
+names(elevation) <- "elevation"
+
+plot(elevation)
+
+#elevation <- as.factor(elevation)
+
+vulture_dat$timestamp <- ymd_hms(vulture_dat$timestamp, tz = "UTC")
+
+dat2 <- vulture_dat |> 
+  # nest by id
+  nest(data = -individual.local.identifier) |>
+  mutate(track = map(data, ~make_track(.x, location.long,location.lat, timestamp, crs = 4326))) |>
+  # create new list column by resampling the data and computing steps
+  # this creates a new column with resampled track objects with step properties
+  mutate(data.resampled.steps = map(track, ~ .x |> 
+  track_resample(rate = minutes(2), tolerance = minutes(300)) |>
+  steps_by_burst())) |> 
+  # select only id and resampled.step columns
+  # (we do not need the original data.frame anymore)
+  dplyr::select(individual.local.identifier, data.resampled.steps) |> 
+  mutate(extracted_covars = map(data.resampled.steps, ~extract_covariates(.x, elevation, where="start"))) |> 
+  dplyr::select(individual.local.identifier, extracted_covars) |>
+  # unnest 
+  unnest(cols = extracted_covars)
+
+dat3 <- vulture_dat |> 
+  # nest by id
+  nest(data = -individual.local.identifier) |>
+  mutate(track = map(data, ~make_track(.x, location.long,location.lat, timestamp, crs = 4326))) |>
+  # create new list column by resampling the data and computing steps
+  # this creates a new column with resampled track objects with step properties
+  mutate(data.resampled.steps = map(track, ~ .x |> 
+  track_resample(rate = minutes(2), tolerance = minutes(300)) |>
+  steps_by_burst())) |> 
+  # select only id and resampled.step columns
+  # (we do not need the original data.frame anymore)
+  dplyr::select(individual.local.identifier, data.resampled.steps) |> 
+  mutate(extracted_covars = map(data.resampled.steps, ~extract_covariates(.x, elevation, where="end"))) |> 
+  dplyr::select(individual.local.identifier, extracted_covars) |>
+  # unnest 
+  unnest(cols = extracted_covars)
+
+dat2 |>
+  ggplot(aes(x=elevation))+
+  geom_histogram()
+
+dat3 |>
+  ggplot(aes(x=elevation))+
+  geom_histogram()
+
+
+```
+
+```{r try linear regression step length and elevation}
+
+start_sl_elevation <- lm(sl_ ~ elevation, data=dat2)
+
+summary(start_sl_elevation)
+
+ggplot(dat2, aes(x=elevation, y=sl_)) + 
+  geom_point() + 
+  geom_smooth(method='lm', col='black')
+
+stop_sl_elevation <- lm(sl_ ~ elevation, data=dat3)
+
+summary(stop_sl_elevation)
+
+plot(dat3$elevation, dat2$sl_)
+
+ggplot(dat3, aes(x=elevation, y=sl_)) + 
+  geom_point() + 
+  geom_smooth(method='lm', col='black')
+
+```
+
 4. Fit a habitat selection function of your own choice (resource selection function at one scale or an (integrated) step-selection function) to the data using one covariate.
 
+
+```{r habitat selection function}
+
+
+
+
+```
