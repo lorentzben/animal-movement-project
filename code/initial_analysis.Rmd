@@ -466,6 +466,7 @@ hr_overlap(kdes, akdes)
 
 ```{r}
 library(terra)
+library(amt)
 
 airport <- terra::rast("../data/US_VFR_Wall_Planning_Chart.tif")
 airport
@@ -487,11 +488,90 @@ airport_colors[airport_colors$red >= 249,]
 airport_colors[airport_colors$red == 136,]
 
 airport_colors$isAirport <- ifelse(airport_colors$value %in% c(1,8,10,28,68), TRUE, FALSE)
-airport_class <- cbind(airport_colors$value, airport_colors$isAirport)
-colnames(airport_class) <- c("code","isAirport")
+airport_class <- cbind(as.numeric(airport_colors$value), airport_colors$isAirport)
+colnames(airport_class) <- c("ID","isAirport")
 airport_class <- as.tibble(airport_class)
 
 
+airport <- as.factor(airport)
+air_lvl <- levels(airport)[[1]]
+
+levels(airport)[[1]][,2] <- as.numeric(levels(airport)[[1]][,2])
+
+airport_class <- airport_class[airport_class$ID %in% air_lvl$ID,]
+
+levels(airport)[[1]]<- data.frame(airport_class)
+
+plot(airport)
+
+terra::extract(airport, data.frame(trk_91_sbb[c("x1_", "y1_")]))
+
+trk_91_airport <- extract_covariates(trk_91_sbb, airport, where = "start")
+
+#' Notice that now the structure of tibble with computed steps is still kept, and
+#' the land cover was added as a new column already. Also, we defined 
+#' `where = "start"` because we are interested in the land cover in the points
+#' at the start of a step.
+trk_91_airport
+
+trk_91_airport |> 
+  ggplot(aes(x = isAirport)) +
+  geom_bar() +
+  coord_flip()
+
+vulture_dat$timestamp <- ymd_hms(vulture_dat$timestamp, tz = "UTC")
+
+dat2 <- vulture_dat |> 
+  # nest by id
+  nest(data = -individual.local.identifier) |>
+  mutate(track = map(data, ~make_track(.x, location.long,location.lat, timestamp, crs = 4326))) |>
+  # create new list column by resampling the data and computing steps
+  # this creates a new column with resampled track objects with step properties
+  mutate(data.resampled.steps = map(track, ~ .x |> 
+  track_resample(rate = minutes(2), tolerance = minutes(300)) |>
+  steps_by_burst())) |> 
+  # select only id and resampled.step columns
+  # (we do not need the original data.frame anymore)
+  dplyr::select(individual.local.identifier, data.resampled.steps) |> 
+  mutate(extracted_covars = map(data.resampled.steps, ~extract_covariates(.x, airport, where="start"))) |> 
+  dplyr::select(individual.local.identifier, extracted_covars) |>
+  # unnest 
+  unnest(cols = extracted_covars)
+
+# TODO do we need to come back to this?
+# # extract environmental information at the starting location of each step
+# dat2_env <- extract_covariates(dat2, airport, where = "start") 
+
+#' We can now plot how the step varies with land cover class.
+
+dat2 |> 
+  drop_na() |>
+  ggplot(aes(x = isAirport, y = sl_)) +
+  geom_boxplot() +
+  coord_flip()
+
+sort(vulture_dat$location.lat,decreasing = T)
+#34.75599 ~ 35
+sort(vulture_dat$location.lat)
+#26.21273 ~ 26
+
+sort(vulture_dat$location.long,decreasing = T)
+# -80.12099
+sort(vulture_dat$location.long)
+# -82.81824
+
+r <- rast(xmin=0, xmax=3360000, ymin=-3340000, ymax=0, nrows=3360000, ncols=3340000)
+
+land_use <- terra::rast("../data/land_cover_2020_30m_tif/NA_NALCMS_landcover_2020_30m/data/NA_NALCMS_landcover_2020_30m.tif")
+
+crs(r) <- crs(land_use)
+
+cm <- crop(land_use, r)
+
+land_use
+land_use <- as.factor(land_use)
+plot(land_use) 
+levels(land_use)
 ```
 
 
