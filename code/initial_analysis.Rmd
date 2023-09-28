@@ -712,7 +712,29 @@ ggplot(dat3, aes(x=elevation, y=sl_)) +
 
 
 ```{r habitat selection function}
+library(tidyverse)
+library(amt)
+library(broom)
+library(patchwork)
+library(terra)
 
+dat_108 <- filter(vulture_dat, individual.local.identifier== 108)
+
+ssf_108 <- dat_108 |> 
+  make_track(location.long,location.lat, timestamp, crs = 4326) |>
+  track_resample(rate = minutes(2), tolerance = minutes(300)) |>
+  steps_by_burst() |>
+  random_steps() |>
+  extract_covariates(elevation) |>
+  mutate(log_sl_ = log(sl_),
+         cos_ta_ = cos(ta_))
+
+ssf_108
+
+m1 <- ssf_108 |> 
+  fit_issf(case_ ~ elevation + strata(step_id_), model=TRUE)
+
+summary(m1)
 
 
 
